@@ -59,8 +59,8 @@ class MySleep:
 
 def report():
     print("[!]: Меню жалоб")
-    TOKEN = "7799355760:AAG7erGZ_X-awuU3RJQGS7qK9vsP4cLoo-Q"
-    chat_id = "7479090715"
+    TOKEN = ""
+    chat_id = ""
     msg = input(Colorate.Horizontal(Colors.purple_to_red, "Ваше сообщение в поддержку: "))
     message = f"Новое сообщение в поддержку от Arnold Support\nС компьютера: {socket.gethostname()}\n\n\n `{msg}`"
     url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}&parse_mode=Markdown"
