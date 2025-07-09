@@ -1,12 +1,3 @@
-# PIP
-# pip install pyaudio
-# pip install SpeechRecognition
-# pip install googletrans
-# pip install keyboard
-# pip install pyttsx3
-
-# from googletrans import Translator
-
 import speech_recognition as sr
 import requests
 import os
@@ -22,14 +13,9 @@ import telebot
 from alive_progress import alive_bar
 import socket
 
-#! <-- [ УСЛОВИЯ ] -->
 engine = pyttsx3.init()
 engine.setProperty('rate', 135)
-r = sr.Recognizer()
-mic = sr.Microphone()
-#! <-- ------------ -->
 
-# <-- [ Командные функции ] -->
 def cls():
     os.system("cls")
 
@@ -69,47 +55,15 @@ def report():
     KD(2)
     cls()
 
-def calc():
-    with mic as source:
-        r.adjust_for_ambient_noise(source)
-        audio = r.listen(source)
-    VoiceLib = r.recognize_google(audio, language='ru-RU')
-    out(f"{VoiceLib}")
-    out("Первое число")
-    with mic as source:
-        r.adjust_for_ambient_noise(source)
-        audio = r.listen(source)
-    n_one = r.recognize_google(audio, language='ru-RU')
-    out("Второе число")
-    with mic as source:
-        r.adjust_for_ambient_noise(source)
-        audio = r.listen(source)
-    n_two = r.recognize_google(audio, language='ru-RU')
-    out("Что сделать?")
-    with mic as source:
-        r.adjust_for_ambient_noise(source)
-        audio = r.listen(source)
-    var = r.recognize_google(audio, language='ru-RU')
-    if var == "cложить":
-        out(int(n_one) + int(n_two))
-    if var == "вычесть":
-        say(int(n_one) - int(n_two))
-    if var == "умножить":
-        out(int(n_one) * int(n_two))
-    if var == "поделить":
-        out(int(n_one) / int(n_two))
-
-
 def PluginStart():
     os.system(r'p_loader.exe')
 
 def Checker():
-    PluginLoader = 'p_loader.exe'
     Config = "config\\arnold.cfg"
     with alive_bar(100, title='Загрузка', length=18, bar='filling') as bar:
         for i in range(100):
             if i and i % 15 == 0:
-                if not os.path.exists(PluginLoader and Config):
+                if not os.path.exists(Config):
                     out("| Ошибка #1 / Нажмите 'Q' чтобы закрыть")
                     while 1:
                         if keyboard.is_pressed('q'):
@@ -152,7 +106,6 @@ Sleep = ['режим сна', 'уйди в режим сна', 'усни', 'сп
 
 AppsName = {
     'notepad': ['Блокнот', 'блокнот'],
-    'calculator': ['Калькулятор', 'калькулятор'],
     'browser': ['Браузер', 'браузер']
 }
 
@@ -169,12 +122,11 @@ BoredHand = ['Напиши за меня', 'Пиши за меня', 'пиши �
 Google = ['Погугли', 'загугли', 'Загугли']
 ReportReact = ['Репорт', 'репорт', 'Оставить репорт', 'поддержка', 'Поддержка']
 update = ['Обновление', 'Обновись', 'Обновить']
-calcul = ['калькулятор', 'Калькулятор']
 
 how = ['Как', 'как']
 why = ['Почему', 'почему', 'зачем', 'Зачем']
 
-insult = ['тупой', 'дебил', 'дурак', 'даун', 'сука', 'баран', 'аут', 'выблядок', 'уебище', 'псина', 'аутист', 'умри', 'отсталый', 'хуесос']
+insult = ['тупой', 'дебил', 'дурак', 'даун', 'сука', 'баран', 'аут', 'выблядок', 'уебище', 'псина', 'аутист', 'умри', 'отсталый', 'хуесос', 'дебил']
 insults = [
     'Тупоголовое существо', 
     'Заткни ебало', 
@@ -213,26 +165,22 @@ logo = """
 def MainScript():
     cls()
     out("> ")
-    # <-- [ Проверка и прослушка микрофона ] -->
-    r = sr.Recognizer()
-    mic = sr.Microphone()
     # <-- ---------------------------------- -->
     while 1:
+        r = sr.Recognizer()
+        mic = sr.Microphone()
         with mic as source:
             r.adjust_for_ambient_noise(source)
             audio = r.listen(source)
-
         VoiceLib = r.recognize_google(audio, language='ru-RU')
         words = VoiceLib.split()
 
         if (len(words) >= 2 and
                 words[0] in AskToOpen and
-                (words[1] in AppsName['notepad'] or words[1] in AppsName['calculator'])):
+                (words[1] in AppsName['notepad'])):
             query = ' '.join(words[2:])
             if words[1] in AppsName['notepad']:
                 launch("notepad")
-            elif words[1] in AppsName['calculator']:
-                launch("calc")
 
         if (len(words) >= 0 and
                 words[0] in GreetingVar):
@@ -280,9 +228,6 @@ def MainScript():
             say(time.strftime('%H:%M', time.localtime()))
             out(time.strftime('%H:%M', time.localtime()))
 
-        if VoiceLib in calcul:
-            calc()
-
         if VoiceLib in WhatWeather:
             say("Скажите город")
             
@@ -316,7 +261,7 @@ def MainScript():
             mic = sr.Microphone()
 
             say("У вас есть 10 секунд чтобы выбрать поле ввода. \n(работает на один ввод, дальше повторная команда)")
-            KD(6)
+            KD(5)
             say("Можете говорить!")
             with mic as source:
                 r.adjust_for_ambient_noise(source)
@@ -353,5 +298,5 @@ Checker()
 time.sleep(0.8)
 cls()
 out(logo)
-KD(0.6)
+KD(0.3)
 MainScript()
